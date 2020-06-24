@@ -3,7 +3,7 @@
 //koneksi database
 $HostName = "localhost";
 $HostUser = "root";
-$HostPass = "";
-$db = "db_absensi";
+$HostPass = "root";
+$db = "absensi";
 
 ?>
