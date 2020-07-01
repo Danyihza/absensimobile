@@ -41,9 +41,10 @@ public class ScannerActivity extends AppCompatActivity{
     ImageView ivBgContent;
     CodeScanner mCodeScanner;
     CodeScannerView scannerView;
+    RequestQueue requestQueue;
     String NimHolder,PertemuanHolder;
     ProgressDialog progressDialog;
-    String HttpUrl="http://192.168.137.1/presensi/api/keyabsen/absen";
+    String HttpUrl="http://192.168.1.6/sipjti/presensi/api/keyabsen/absen";
     Boolean CheckEditText;
 
     @Override
@@ -56,6 +57,8 @@ public class ScannerActivity extends AppCompatActivity{
 
         ivBgContent = findViewById(R.id.ivBgContent);
         scannerView = findViewById(R.id.scannerView);
+        requestQueue = Volley.newRequestQueue(ScannerActivity.this);
+        progressDialog = new ProgressDialog(ScannerActivity.this);
 
         ivBgContent.bringToFront();
 
@@ -152,9 +155,10 @@ public class ScannerActivity extends AppCompatActivity{
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.getString("status");
                             String message = jsonObject.getString("message");
-                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+
 
                             if (status.equals("true")) {
+                                JSONArray jsonArray = jsonObject.getJSONArray("data");
                                 for (int i = 0; i<jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -167,7 +171,7 @@ public class ScannerActivity extends AppCompatActivity{
                                     String golongan_absen = object.getString("golongan_absen").trim();
                                     String semester_absen = object.getString("semester_absen").trim();
                                     String status_absen = object.getString("status").trim();
-                                    String tanggal_absen = object.getString("tanggal_absen").trim();
+                                    String tanggal_absen = object.getString("tanggal_absen");
 
 
 //                                    dataManager.saveData(nim, nama_mahasiswa, kode_prodi, nama_prodi, kode_jurusan, nama_jurusan, golongan, semester);
@@ -179,8 +183,8 @@ public class ScannerActivity extends AppCompatActivity{
                                     intent.putExtra("nama_matkul", nama_matkul);
                                     intent.putExtra("pertemuan", pertemuan);
                                     intent.putExtra("status_absen", status_absen);
-                                    intent.putExtra("golongan", golongan_absen);
-                                    intent.putExtra("semester", semester_absen);
+                                    intent.putExtra("golongan_absen", golongan_absen);
+                                    intent.putExtra("semester_absen", semester_absen);
                                     intent.putExtra("tanggal_absen", tanggal_absen);
                                     startActivity(intent);
                                     Toast.makeText(ScannerActivity.this, message , Toast.LENGTH_SHORT).show();
@@ -188,8 +192,12 @@ public class ScannerActivity extends AppCompatActivity{
 
 //                                    Toast.makeText(MahasiswaLogin.this, "Success Login. \nYour NIM : "+name+"\nYour Name : "+email, Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
+                            } else if (status.equals("sudah")) {
                                 Toast.makeText(ScannerActivity.this, message, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(ScannerActivity.this, MahasiswaActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(ScannerActivity.this, message, Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

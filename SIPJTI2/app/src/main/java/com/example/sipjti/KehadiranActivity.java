@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class KehadiranActivity extends AppCompatActivity {
     TextView nama;
-    private String URLstring = "http://192.168.137.1/presensi/api/keyhadir/hadir";
+    private String URLstring = "http://192.168.1.6/sipjti/presensi/api/keyhadir/hadir";
     private static ProgressDialog mProgressDialog;
     private ListView listView;
     ArrayList<PlayerRecord> dataModelArrayList;

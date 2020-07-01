@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class JadwalActivity extends AppCompatActivity {
     TextView gol, sms;
-    private String URLstring = "http://192.168.137.1/presensi/api/keyjadwal/jadwal";
+    private String URLstring = "http://192.168.1.6/sipjti/presensi/api/keyjadwal/jadwal";
     private static ProgressDialog mProgressDialog;
     private ListView listView;
     ArrayList<PlayerList> dataModelArrayList;
