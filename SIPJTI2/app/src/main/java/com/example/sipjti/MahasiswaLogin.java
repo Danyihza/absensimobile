@@ -122,8 +122,10 @@ public class MahasiswaLogin extends AppCompatActivity {
 
 //                                    Toast.makeText(MahasiswaLogin.this, "Success Login. \nYour NIM : "+name+"\nYour Name : "+email, Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                Toast.makeText(MahasiswaLogin.this, "Wrong nim or password!!", Toast.LENGTH_SHORT).show();
+                            } else if(status.equals("false")){
+                                String message = jsonObject.getString("message");
+                                Toast.makeText(MahasiswaLogin.this, message, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MahasiswaLogin.this, "Wrong nim or password!!", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

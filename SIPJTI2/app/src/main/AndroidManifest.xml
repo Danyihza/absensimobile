@@ -40,6 +40,12 @@
         <activity android:name=".DosenHome">
 
         </activity>
+        <activity android:name=".KehadiranActivity">
+
+        </activity>
+        <activity android:name=".RecordActivity">
+
+        </activity>
     </application>
 
 </manifest>

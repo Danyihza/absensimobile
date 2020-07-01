@@ -1,7 +1,9 @@
 package com.example.sipjti;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -10,6 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
@@ -21,15 +30,29 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class ScannerActivity extends AppCompatActivity{
     ImageView ivBgContent;
     CodeScanner mCodeScanner;
     CodeScannerView scannerView;
+    String NimHolder,PertemuanHolder;
+    ProgressDialog progressDialog;
+    String HttpUrl="http://192.168.137.1/presensi/api/keyabsen/absen";
+    Boolean CheckEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scanner_activity);
+        NimHolder = getIntent().getStringExtra("nim");
+        //NimHolder = "E41182006";
+
 
         ivBgContent = findViewById(R.id.ivBgContent);
         scannerView = findViewById(R.id.scannerView);
@@ -43,8 +66,9 @@ public class ScannerActivity extends AppCompatActivity{
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String message = "result :\n" + result.getText();
-                        showAlertDialog(message);
+                        PertemuanHolder = result.getText();
+                        String message = "Konfirmasi Presensi Kehadiran";
+                        showAlertDialog(message, PertemuanHolder, NimHolder);
                     }
                 });
             }
@@ -87,7 +111,7 @@ public class ScannerActivity extends AppCompatActivity{
                 .check();
     }
 
-    private void showAlertDialog(String message){
+    private void showAlertDialog(String message, final String pertemuan, final String nim){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message);
         builder.setCancelable(true);
@@ -96,8 +120,9 @@ public class ScannerActivity extends AppCompatActivity{
                 "PRESENT",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(ScannerActivity.this, "Present Success", Toast.LENGTH_LONG).show();
-                        finish();
+                        UserPresent(pertemuan, nim);
+//                        Toast.makeText(ScannerActivity.this, "Presence Success", Toast.LENGTH_LONG).show();
+//                        finish();
                     }
                 });
 
@@ -113,5 +138,84 @@ public class ScannerActivity extends AppCompatActivity{
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+    private void UserPresent(final String pertemuan, final String nim) {
+        progressDialog.setMessage("Data Processing");
+        //menampilkan dialog
+        progressDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String status = jsonObject.getString("status");
+                            String message = jsonObject.getString("message");
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                            if (status.equals("true")) {
+                                for (int i = 0; i<jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id_pertemuan").trim();
+                                    String nim = object.getString("nim").trim();
+                                    String nama_mahasiswa = object.getString("nama_mahasiswa").trim();
+                                    String kode_matkul = object.getString("kode_matkul").trim();
+                                    String nama_matkul = object.getString("nama_matkul").trim();
+                                    String pertemuan = object.getString("pertemuan").trim();
+                                    String golongan_absen = object.getString("golongan_absen").trim();
+                                    String semester_absen = object.getString("semester_absen").trim();
+                                    String status_absen = object.getString("status").trim();
+                                    String tanggal_absen = object.getString("tanggal_absen").trim();
+
+
+//                                    dataManager.saveData(nim, nama_mahasiswa, kode_prodi, nama_prodi, kode_jurusan, nama_jurusan, golongan, semester);
+
+                                    Intent intent = new Intent(ScannerActivity.this, RecordActivity.class);
+                                    intent.putExtra("nim", nim);
+                                    intent.putExtra("nama_mahasiswa", nama_mahasiswa);
+                                    intent.putExtra("kode_matkul", kode_matkul);
+                                    intent.putExtra("nama_matkul", nama_matkul);
+                                    intent.putExtra("pertemuan", pertemuan);
+                                    intent.putExtra("status_absen", status_absen);
+                                    intent.putExtra("golongan", golongan_absen);
+                                    intent.putExtra("semester", semester_absen);
+                                    intent.putExtra("tanggal_absen", tanggal_absen);
+                                    startActivity(intent);
+                                    Toast.makeText(ScannerActivity.this, message , Toast.LENGTH_SHORT).show();
+                                    finish();
+
+//                                    Toast.makeText(MahasiswaLogin.this, "Success Login. \nYour NIM : "+name+"\nYour Name : "+email, Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(ScannerActivity.this, message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(ScannerActivity.this, "User Presence Failed! "+e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(ScannerActivity.this, "Network Disruption "+error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("nim", nim);
+                params.put("pertemuan", pertemuan);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 }
 

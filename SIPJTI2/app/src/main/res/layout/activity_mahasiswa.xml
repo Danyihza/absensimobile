@@ -212,7 +212,6 @@
 
                 <include layout="@layout/card_schedule"/>
                 <include layout="@layout/card_schedule"/>
-                <include layout="@layout/card_schedule"/>
 
             </LinearLayout>
 

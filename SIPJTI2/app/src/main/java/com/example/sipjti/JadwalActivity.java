@@ -73,6 +73,7 @@ public class JadwalActivity extends AppCompatActivity {
 //                progressDialog.dismiss();
                 try {
                     JSONObject obj = new JSONObject(response);
+                    String message = obj.getString("message");
                     //objek bernama "status" akan memiliki nilai benar atau salah
                     if(obj.optString("status").equals("true")){
                         //Jika nilainya benar maka kompiler akan mem-parsing JSONArray yang disebut "data"
@@ -93,6 +94,9 @@ public class JadwalActivity extends AppCompatActivity {
                         }
                         //Kompiler akan memanggil metode setupListView()
                         setupListview();
+                    }else if(obj.optString("status").equals("false")){
+                        removeSimpleProgressDialog();
+                        Toast.makeText(JadwalActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -104,7 +108,9 @@ public class JadwalActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error)
                     {
                         //displaying the error in toast if occurrs
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        removeSimpleProgressDialog();
+                        Toast.makeText(JadwalActivity.this, "Network Disruption "+error.toString(), Toast.LENGTH_SHORT).show();
+
                     }
                 });
         // request queue

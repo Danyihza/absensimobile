@@ -6,6 +6,7 @@
     android:orientation="horizontal"
     android:layout_marginBottom="15dp">
     <LinearLayout
+        android:id="@+id/cardHadir"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:background="@drawable/gradient1"
