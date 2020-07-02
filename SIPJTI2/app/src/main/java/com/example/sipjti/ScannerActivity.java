@@ -44,7 +44,7 @@ public class ScannerActivity extends AppCompatActivity{
     RequestQueue requestQueue;
     String NimHolder,PertemuanHolder;
     ProgressDialog progressDialog;
-    String HttpUrl="http://192.168.137.1/presensi/api/keyabsen/absen";
+    String HttpUrl="http://192.168.1.6/sipjti/presensi/api/keyabsen/absen";
     Boolean CheckEditText;
 
     @Override

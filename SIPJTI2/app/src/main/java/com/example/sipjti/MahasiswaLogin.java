@@ -35,7 +35,7 @@ public class MahasiswaLogin extends AppCompatActivity {
     RequestQueue requestQueue;
     String NimHolder,PasswordHolder;
     ProgressDialog progressDialog;
-    String HttpUrl="http://192.168.137.1/presensi/api/authentication/login";
+    String HttpUrl="http://192.168.1.6/sipjti/presensi/api/authentication/login";
     Boolean CheckEditText;
     SessionManager sessionManager;
 
