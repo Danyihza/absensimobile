@@ -24,7 +24,7 @@
             android:padding="4dp"
             android:textSize="24dp"
             android:textStyle="bold"
-            android:text="W"
+            android:text=""
             android:id="@+id/tvInis"
             android:textAllCaps="true"/>
 
@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Workshop Aplikasi Mobile"
+            android:text=""
             android:id="@+id/tvMatkul"
             android:textColor="@color/miniTitle"
             android:textSize="16dp"
@@ -57,7 +57,7 @@
                 android:layout_height="20dp"
                 android:layout_marginRight="10dp"
                 android:padding="2dp"
-                android:src="@drawable/ic_map" />
+                android:src="@drawable/ic_temu" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_clock"
+                android:src="@drawable/ic_hadir"
                 android:padding="2dp"
                 android:layout_marginRight="10dp"/>
             <TextView
@@ -102,7 +102,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:padding="2dp"
-                android:src="@drawable/ic_map"
+                android:src="@drawable/ic_hitung"
                 android:layout_marginRight="10dp"/>
             <TextView
                 android:layout_width="match_parent"

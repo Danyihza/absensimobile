@@ -58,8 +58,8 @@ public class MahasiswaLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //pindah ke MainActivity yaitu halaman pendafataran
-                Intent i = new Intent(MahasiswaLogin.this, DosenLogin.class);
-                startActivity(i);
+                Toast.makeText(MahasiswaLogin.this, "Soon..", Toast.LENGTH_LONG).show();
+
             }
         });
         //jika klik button Login
@@ -93,6 +93,7 @@ public class MahasiswaLogin extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String status = jsonObject.getString("status");
+                            String message = jsonObject.getString("message");
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
 
                             if (status.equals("true")) {
@@ -123,9 +124,10 @@ public class MahasiswaLogin extends AppCompatActivity {
 //                                    Toast.makeText(MahasiswaLogin.this, "Success Login. \nYour NIM : "+name+"\nYour Name : "+email, Toast.LENGTH_SHORT).show();
                                 }
                             } else if(status.equals("false")){
-                                String message = jsonObject.getString("message");
                                 Toast.makeText(MahasiswaLogin.this, message, Toast.LENGTH_SHORT).show();
                                 //Toast.makeText(MahasiswaLogin.this, "Wrong nim or password!!", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(MahasiswaLogin.this, message, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

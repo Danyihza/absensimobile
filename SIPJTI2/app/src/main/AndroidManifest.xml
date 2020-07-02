@@ -25,19 +25,16 @@
         <activity android:name=".ScannerActivity">
 
         </activity>
+        <activity android:name=".UbahPassword">
 
+        </activity>
         <activity android:name=".MahasiswaActivity">
 
         </activity>
         <activity android:name=".MahasiswaLogin">
-        </activity>
-        <activity android:name=".DosenLogin">
 
         </activity>
         <activity android:name=".JadwalActivity">
-
-        </activity>
-        <activity android:name=".DosenHome">
 
         </activity>
         <activity android:name=".KehadiranActivity">

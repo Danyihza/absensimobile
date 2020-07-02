@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 public class KehadiranActivity extends AppCompatActivity {
     TextView nama;
+    SwipeRefreshLayout lySwipe;
     private String URLstring = "http://192.168.137.1/presensi/api/keyhadir/hadir";
     private static ProgressDialog mProgressDialog;
     private ListView listView;
@@ -37,24 +39,29 @@ public class KehadiranActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kehadiran);
+        lySwipe = findViewById(R.id.lySwipe1);
         listView = findViewById(R.id.lvhadir);
         //memanggil method retrieveJSON()
         //menetapkan ID
         nama = (TextView) findViewById(R.id.tvnm);
 
         // Menerima value ke activity melalui intent
-        String GolHolder = getIntent().getStringExtra("golongan");
-        String SmsHolder = getIntent().getStringExtra("semester");
-        String NimHolder = getIntent().getStringExtra("nim");
+        final String GolHolder = getIntent().getStringExtra("golongan");
+        final String SmsHolder = getIntent().getStringExtra("semester");
+        final String NimHolder = getIntent().getStringExtra("nim");
         String NamaHolder = getIntent().getStringExtra("nama");
-
-//        String GolHolder = "E";
-//        String SmsHolder = "3";
-//        String ProHolder = "TIF";
+        nama.setText(NamaHolder);
 
         retrieveJSON(URLstring+"?nim="+NimHolder+"&golongan="+GolHolder+"&semester="+SmsHolder);
         //menempatkan value tersebut ke textView
-        nama.setText(NamaHolder);
+        lySwipe.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary);
+        lySwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                retrieveJSON(URLstring+"?nim="+NimHolder+"&golongan="+GolHolder+"&semester="+SmsHolder);
+                lySwipe.setRefreshing(false);
+            }
+        });
 
     }
 

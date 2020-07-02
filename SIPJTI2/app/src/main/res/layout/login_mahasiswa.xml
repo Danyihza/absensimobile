@@ -23,7 +23,6 @@
             android:padding="20dp"
             android:layout_marginTop="30dp">
 
-
             <RelativeLayout
                 android:background="@drawable/btn_rounded"
                 android:layout_width="match_parent"
@@ -85,7 +84,7 @@
                         android:id="@+id/btlogin"
                         android:textColor="@color/whiteTextColor"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="60dp"
                         android:text="@string/login"
                         android:textSize="18dp"
                         android:background="@drawable/button_custom"
@@ -131,8 +130,8 @@
                 android:layout_marginTop="15dp"/>
         </LinearLayout>
     </ScrollView>
-    <include
-        android:id="@+id/dialogbar"
-        android:visibility="gone"
-        layout="@layout/progress_dialog"/>
+<!--    <include-->
+<!--        android:id="@+id/dialogbar"-->
+<!--        android:visibility="gone"-->
+<!--        layout="@layout/progress_dialog"/>-->
 </RelativeLayout>

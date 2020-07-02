@@ -54,16 +54,17 @@ public class RecordAdapter extends BaseAdapter {
             holder.persen = (TextView) convertView.findViewById(R.id.tvPersen);
             holder.minggu = (TextView) convertView.findViewById(R.id.tvPer);
             holder.stat = (TextView) convertView.findViewById(R.id.tvStat);
+
+            holder.inis.setText(dataModelArrayList.get(position).getInisial());
+            holder.matkul.setText(dataModelArrayList.get(position).getNama_matkul());
+            holder.banding.setText(dataModelArrayList.get(position).getJumlah_hadir()+"/"+dataModelArrayList.get(position).getJumlah_pertemuan());
+            holder.persen.setText("("+dataModelArrayList.get(position).getPersentase()+"%)");
+            holder.minggu.setText(dataModelArrayList.get(position).getMinggu_pertemuan());
+            holder.stat.setText(dataModelArrayList.get(position).getStatus_absen());
         } else {
             // the getTag returns the viewHolder object set as a tag to the view
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.inis.setText(dataModelArrayList.get(position).getInisial());
-        holder.matkul.setText(dataModelArrayList.get(position).getNama_matkul());
-        holder.banding.setText(dataModelArrayList.get(position).getJumlah_hadir()+"/"+dataModelArrayList.get(position).getJumlah_pertemuan());
-        holder.persen.setText("("+dataModelArrayList.get(position).getPersentase()+"%)");
-        holder.minggu.setText(dataModelArrayList.get(position).getMinggu_pertemuan());
-        holder.stat.setText(dataModelArrayList.get(position).getStatus_absen());
         return convertView;
     }
     private class ViewHolder {

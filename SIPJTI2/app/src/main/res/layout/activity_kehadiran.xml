@@ -36,11 +36,18 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
-    <ListView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/lySwipe1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/lvhadir"
-        android:padding="10dp">
-    </ListView>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lvhadir"
+            android:padding="10dp">
+        </ListView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

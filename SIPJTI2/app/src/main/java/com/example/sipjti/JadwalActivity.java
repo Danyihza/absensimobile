@@ -2,13 +2,17 @@ package com.example.sipjti;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,6 +29,8 @@ import java.util.ArrayList;
 
 public class JadwalActivity extends AppCompatActivity {
     TextView gol, sms;
+    SwipeRefreshLayout lySwipe;
+    LinearLayout swAll;
     private String URLstring = "http://192.168.137.1/presensi/api/keyjadwal/jadwal";
     private static ProgressDialog mProgressDialog;
     private ListView listView;
@@ -37,6 +43,7 @@ public class JadwalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jadwal);
+        lySwipe = findViewById(R.id.lySwipe);
         listView = findViewById(R.id.lv);
         //memanggil method retrieveJSON()
         //menetapkan ID
@@ -44,18 +51,24 @@ public class JadwalActivity extends AppCompatActivity {
         sms = (TextView) findViewById(R.id.tvSmsr);
 
         // Menerima value ke activity melalui intent
-        String GolHolder = getIntent().getStringExtra("golongan");
-        String SmsHolder = getIntent().getStringExtra("semester");
-        String ProHolder = getIntent().getStringExtra("kode_prodi");
-
-//        String GolHolder = "E";
-//        String SmsHolder = "3";
-//        String ProHolder = "TIF";
+        final String GolHolder = getIntent().getStringExtra("golongan");
+        final String SmsHolder = getIntent().getStringExtra("semester");
+        final String ProHolder = getIntent().getStringExtra("kode_prodi");
+        gol.setText(gol.getText() + GolHolder);
+        sms.setText(sms.getText() + SmsHolder);
 
         retrieveJSON(URLstring+"?golongan="+GolHolder+"&semester="+SmsHolder+"&kode_prodi="+ProHolder);
         //menempatkan value tersebut ke textView
-        gol.setText(gol.getText() + GolHolder);
-        sms.setText(sms.getText() + SmsHolder);
+
+
+        lySwipe.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary);
+        lySwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                retrieveJSON(URLstring+"?golongan="+GolHolder+"&semester="+SmsHolder+"&kode_prodi="+ProHolder);
+                lySwipe.setRefreshing(false);
+            }
+        });
 
     }
 

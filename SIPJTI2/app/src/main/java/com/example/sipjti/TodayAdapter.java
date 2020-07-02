@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
 
-public class ListAdapter extends BaseAdapter {
+public class TodayAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<PlayerList> dataModelArrayList;
-    public ListAdapter(Context context, ArrayList<PlayerList> dataModelArrayList) {
+    public TodayAdapter(Context context, ArrayList<PlayerList> dataModelArrayList) {
         this.context = context;
         this.dataModelArrayList = dataModelArrayList;
     }

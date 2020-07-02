@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SIPJTI</string>
+    <string name="app_name">SIPOLIJE</string>
     <string name="login_email_hint">NIM</string>
     <string name="login_password_hint">Password</string>
     <string name="login">LOGIN</string>

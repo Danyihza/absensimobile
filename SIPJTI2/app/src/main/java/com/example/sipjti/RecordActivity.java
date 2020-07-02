@@ -30,6 +30,7 @@ public class RecordActivity extends AppCompatActivity {
 
         String PerHolder = getIntent().getStringExtra("pertemuan");
         String TangHolder = getIntent().getStringExtra("tanggal_absen");
+//        Date TanHolder = new Date(getIntent().getLongExtra("tanggal_absen"));
         String KdHolder = getIntent().getStringExtra("kode_matkul");
         String MatHolder = getIntent().getStringExtra("nama_matkul");
         String NimHolder = getIntent().getStringExtra("nim");
@@ -38,7 +39,7 @@ public class RecordActivity extends AppCompatActivity {
         String SmsHolder = getIntent().getStringExtra("semester_absen");
         String StatHolder = getIntent().getStringExtra("status_absen");
 
-        temu.setText("pertemuan "+GolHolder);
+        temu.setText("Pertemuan "+GolHolder);
         tanggal.setText(convertFormat(TangHolder));
         kode.setText(KdHolder);
         matkul.setText(MatHolder);
@@ -51,17 +52,14 @@ public class RecordActivity extends AppCompatActivity {
     }
 
     public static String convertFormat(String inputdate){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, dd MMM yyyy, kk:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
-                try{
-                    date = simpleDateFormat.parse(inputdate);
-                }catch (ParseException e){
-                    e.printStackTrace();
-                }
-                if (date==null){
-                    return "";
-                }
-                SimpleDateFormat convertDateFormat = new SimpleDateFormat("MMM dd, yyyy, kk:mm");
-                return  convertDateFormat.format(date);
+        try {
+            date = format.parse(inputdate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, dd MMM yyyy, kk:mm");
+        return  simpleDateFormat.format(date);
     }
 }
