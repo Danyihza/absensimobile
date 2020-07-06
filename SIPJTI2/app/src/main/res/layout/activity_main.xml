@@ -5,15 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/register_bk_color">
+    android:background="@drawable/gradient3"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:src="@drawable/logo"
-        android:layout_gravity="center"
         android:id="@+id/imageView">
     </ImageView>
+    <ProgressBar
+        android:layout_marginTop="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/progressBar"/>
 <!--    <TextView-->
 <!--        style="@style/viewParent.headerText.NoMode"-->
 <!--        android:layout_width="fill_parent"-->

@@ -31,7 +31,7 @@ public class JadwalActivity extends AppCompatActivity {
     TextView gol, sms;
     SwipeRefreshLayout lySwipe;
     LinearLayout swAll;
-    private String URLstring = "http://192.168.137.1/presensi/api/keyjadwal/jadwal";
+    private String URLstring = "http://sipolije.wsjti.com/api/KeyJadwal/jadwal";
     private static ProgressDialog mProgressDialog;
     private ListView listView;
     ArrayList<PlayerList> dataModelArrayList;
@@ -77,7 +77,7 @@ public class JadwalActivity extends AppCompatActivity {
 //        //menampilkan dialog
 //        progressDialog.show();
         //URL untuk melakukan panggilan http ke serve
-        showSimpleProgressDialog(this, "Loading...","Mengambil Data",false);
+        showSimpleProgressDialog(this, "Loading...","Retrieve Data",false);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
             @Override
@@ -122,7 +122,7 @@ public class JadwalActivity extends AppCompatActivity {
                     {
                         //displaying the error in toast if occurrs
                         removeSimpleProgressDialog();
-                        Toast.makeText(JadwalActivity.this, "Network Disruption "+error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(JadwalActivity.this, "No Network Response", Toast.LENGTH_SHORT).show();
 
                     }
                 });

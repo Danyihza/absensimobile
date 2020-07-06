@@ -39,15 +39,15 @@ public class RecordActivity extends AppCompatActivity {
         String SmsHolder = getIntent().getStringExtra("semester_absen");
         String StatHolder = getIntent().getStringExtra("status_absen");
 
-        temu.setText("Pertemuan "+GolHolder);
+        temu.setText("PERTEMUAN "+PerHolder);
         tanggal.setText(convertFormat(TangHolder));
         kode.setText(KdHolder);
         matkul.setText(MatHolder);
         nim.setText(NimHolder);
         nama.setText(NamHolder);
         stat.setText(StatHolder);
-        gol.setText("golongan "+GolHolder);
-        sms.setText("semester "+SmsHolder);
+        gol.setText("GOLONGAN "+GolHolder);
+        sms.setText("SEMESTER "+SmsHolder);
 
     }
 

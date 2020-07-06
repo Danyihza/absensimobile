@@ -35,7 +35,7 @@ public class MahasiswaLogin extends AppCompatActivity {
     RequestQueue requestQueue;
     String NimHolder,PasswordHolder;
     ProgressDialog progressDialog;
-    String HttpUrl="http://192.168.1.6/sipjti/presensi/api/authentication/login";
+    String HttpUrl="http://sipolije.wsjti.com/api/Authentication/login";
     Boolean CheckEditText;
     SessionManager sessionManager;
 
@@ -82,7 +82,7 @@ public class MahasiswaLogin extends AppCompatActivity {
     }
     //method UserLogin
     private void UserLogin(final String nim, final String password) {
-        progressDialog.setMessage("Data Processing");
+        progressDialog.setMessage("Data Processing...");
         //menampilkan dialog
         progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
@@ -131,7 +131,7 @@ public class MahasiswaLogin extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MahasiswaLogin.this, "User login failed. "+e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MahasiswaLogin.this, "User login failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -139,7 +139,7 @@ public class MahasiswaLogin extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(MahasiswaLogin.this, "Network Disruption "+error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MahasiswaLogin.this, "No Network Response", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

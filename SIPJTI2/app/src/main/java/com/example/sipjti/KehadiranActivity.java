@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class KehadiranActivity extends AppCompatActivity {
     TextView nama;
     SwipeRefreshLayout lySwipe;
-    private String URLstring = "http://192.168.137.1/presensi/api/keyhadir/hadir";
+    private String URLstring = "http://sipolije.wsjti.com/api/KeyHadir/hadir";
     private static ProgressDialog mProgressDialog;
     private ListView listView;
     ArrayList<PlayerRecord> dataModelArrayList;
@@ -70,7 +70,7 @@ public class KehadiranActivity extends AppCompatActivity {
 //        //menampilkan dialog
 //        progressDialog.show();
         //URL untuk melakukan panggilan http ke serve
-        showSimpleProgressDialog(this, "Loading...","Mengambil Data",false);
+        showSimpleProgressDialog(this, "Loading...","Retrieve Data",false);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -124,7 +124,7 @@ public class KehadiranActivity extends AppCompatActivity {
                     {
                         //displaying the error in toast if occurrs
                         removeSimpleProgressDialog();
-                        Toast.makeText(KehadiranActivity.this, "Network Disruption "+error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(KehadiranActivity.this, "No Network Response", Toast.LENGTH_SHORT).show();
 
                     }
                 });

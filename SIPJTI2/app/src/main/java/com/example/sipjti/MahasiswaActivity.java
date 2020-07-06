@@ -10,12 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
@@ -41,19 +42,21 @@ public class MahasiswaActivity extends AppCompatActivity {
     LinearLayout btnJadwal, btnHadir;
     private TextView nama, nim, prodi, gol, sms, jurusan;
     SessionManager sessionManager;
-    private ListView listView;
     SwipeRefreshLayout lySwipe;
-    private String URLstring = "http://192.168.137.1/presensi/api/keytoday/today";
+    private String URLstring = "http://sipolije.wsjti.com/api/KeyToday/today";
     private static ProgressDialog mProgressDialog;
+    private RecyclerView recyclerView;
     ArrayList<PlayerList> dataModelArrayList;
-    private TodayAdapter todayAdapter;
+    private TodayAdapter2 todayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mahasiswa);
+        setContentView(R.layout.activity_mahasiswa2);
         lySwipe = findViewById(R.id.lySwipe3);
-        listView = findViewById(R.id.lvhome);
+        recyclerView = findViewById(R.id.lvhome);
         tvDay = findViewById(R.id.tvday);
 
 //        SimpleDateFormat hari = new SimpleDateFormat("EEEE");
@@ -70,8 +73,6 @@ public class MahasiswaActivity extends AppCompatActivity {
             }
         });
 
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
 
         nama = findViewById(R.id.tvNama);
         nim = findViewById(R.id.tvNim);
@@ -179,7 +180,7 @@ public class MahasiswaActivity extends AppCompatActivity {
 
 
     private void retrieveJSON(String url) {
-        showSimpleProgressDialog(this, "Loading...","Mengambil Data",false);
+        showSimpleProgressDialog(this, "Loading...","Retrieve Data",false);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -222,7 +223,7 @@ public class MahasiswaActivity extends AppCompatActivity {
                     {
                         //displaying the error in toast if occurrs
                         removeSimpleProgressDialog();
-                        Toast.makeText(MahasiswaActivity.this, "Network Disruption "+error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MahasiswaActivity.this, "No Network Response", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -233,8 +234,10 @@ public class MahasiswaActivity extends AppCompatActivity {
 
     private void setupListview(){
         removeSimpleProgressDialog();
-        todayAdapter = new TodayAdapter(this, dataModelArrayList);
-        listView.setAdapter(todayAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MahasiswaActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        todayAdapter = new TodayAdapter2(dataModelArrayList);
+        recyclerView.setAdapter(todayAdapter);
     }
 
     public static void removeSimpleProgressDialog() {

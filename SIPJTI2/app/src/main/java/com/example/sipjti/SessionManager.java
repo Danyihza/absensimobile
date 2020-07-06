@@ -51,9 +51,9 @@ public class SessionManager {
     public void checkLogin(){
 
         if (!this.isLoggin()){
+            ((MahasiswaActivity) context).finish();
             Intent i = new Intent(context, MahasiswaLogin.class);
             context.startActivity(i);
-            ((MahasiswaActivity) context).finish();
         }
     }
 

@@ -44,7 +44,7 @@ public class ScannerActivity extends AppCompatActivity{
     RequestQueue requestQueue;
     String NimHolder,PertemuanHolder;
     ProgressDialog progressDialog;
-    String HttpUrl="http://192.168.1.6/sipjti/presensi/api/keyabsen/absen";
+    String HttpUrl="http://sipolije.wsjti.com/api/KeyAbsen";
     Boolean CheckEditText;
 
     @Override
@@ -199,7 +199,7 @@ public class ScannerActivity extends AppCompatActivity{
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(ScannerActivity.this, "User Presence Failed! "+e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ScannerActivity.this, "User Presence Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -207,7 +207,7 @@ public class ScannerActivity extends AppCompatActivity{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(ScannerActivity.this, "Network Disruption "+error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ScannerActivity.this, "No Network Response", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

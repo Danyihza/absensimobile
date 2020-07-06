@@ -33,7 +33,7 @@ public class UbahPassword extends AppCompatActivity {
     RequestQueue requestQueue;
     String PassHolder1,PassHolder2;
     ProgressDialog progressDialog;
-    String HttpUrl="http://192.168.137.1/presensi/api/keypass/pass";
+    String HttpUrl="http://sipolije.wsjti.com/api/KeyPass";
     Boolean CheckEditText;
     SessionManager sessionManager;
 
@@ -75,7 +75,7 @@ public class UbahPassword extends AppCompatActivity {
     }
     //method UserLogin
     private void UbahPass(final String nim, final String password) {
-        progressDialog.setMessage("Data Processing");
+        progressDialog.setMessage("Data Processing...");
         //menampilkan dialog
         progressDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
@@ -96,7 +96,7 @@ public class UbahPassword extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(UbahPassword.this, "Failed "+e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UbahPassword.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -104,7 +104,7 @@ public class UbahPassword extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        Toast.makeText(UbahPassword.this, "Network Disruption "+error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UbahPassword.this, "No Network Response", Toast.LENGTH_SHORT).show();
                     }
                 })
         {
